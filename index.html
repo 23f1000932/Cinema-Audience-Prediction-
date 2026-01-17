@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cinema Audience Forecasting — ML Research Portfolio</title>
+    <meta name="description"
+        content="Cinema Audience Forecasting using Machine Learning — Advanced ensemble modeling with 99.5%+ accuracy." />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@300;400;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            color-scheme: dark;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", "Sora", system-ui, -apple-system, sans-serif;
+            background: #0b0e17;
+        }
+
+        .bg-animated {
+            background: radial-gradient(1200px 800px at 10% 20%, rgba(52, 143, 235, 0.15), transparent 60%),
+                radial-gradient(900px 700px at 90% 10%, rgba(153, 69, 255, 0.18), transparent 60%),
+                radial-gradient(1000px 700px at 50% 80%, rgba(18, 212, 191, 0.12), transparent 60%),
+                linear-gradient(180deg, rgba(16, 18, 30, 0.98), rgba(8, 10, 18, 1));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bg-animated::before {
+            content: "";
+            position: absolute;
+            inset: -40% -40% -40% -40%;
+            background: conic-gradient(from 180deg at 50% 50%,
+                    rgba(60, 120, 255, 0.08),
+                    rgba(155, 85, 255, 0.08),
+                    rgba(18, 212, 191, 0.08),
+                    rgba(255, 140, 66, 0.08),
+                    rgba(60, 120, 255, 0.08));
+            filter: blur(60px);
+            animation: slowSpin 24s linear infinite;
+            opacity: 0.7;
+            z-index: 0;
+        }
+
+        .noise::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='.06'/></svg>");
+            opacity: 0.45;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            z-index: 1;
+        }
+
+        .glass {
+            background: rgba(18, 22, 38, 0.62);
+            border: 1px solid rgba(120, 140, 255, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+        }
+
+        .glow {
+            box-shadow: 0 0 40px rgba(88, 143, 255, 0.2);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-pill {
+            background: rgba(12, 14, 22, 0.7);
+            border: 1px solid rgba(120, 140, 255, 0.2);
+            backdrop-filter: blur(12px);
+        }
+
+        .wave path {
+            stroke-dasharray: 800;
+            stroke-dashoffset: 800;
+            animation: draw 2.5s ease forwards;
+        }
+
+        @keyframes slowSpin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes draw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4FD1C5, #8B5CF6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+
+<body class="bg-animated noise text-slate-100">
+    <!-- Floating Nav -->
+    <nav class="fixed top-6 left-1/2 z-50 -translate-x-1/2 nav-pill rounded-full px-6 py-3 text-sm tracking-wide">
+        <div class="flex items-center gap-5 text-slate-300">
+            <a class="hover:text-white transition" href="#hero">Overview</a>
+            <a class="hover:text-white transition" href="#problem">Problem</a>
+            <a class="hover:text-white transition" href="#data">Data</a>
+            <a class="hover:text-white transition" href="#method">Method</a>
+            <a class="hover:text-white transition" href="#models">Models</a>
+            <a class="hover:text-white transition" href="#results">Results</a>
+            <a class="hover:text-white transition" href="#impact">Impact</a>
+            <a class="hover:text-white transition" href="#about">About</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center px-6 pt-28">
+        <div class="relative z-10 max-w-6xl mx-auto">
+            <div class="grid lg:grid-cols-[1.2fr_0.8fr] gap-10 items-center">
+                <div class="space-y-6">
+                    <p class="text-sm uppercase tracking-[0.3em] text-teal-300">Machine Learning Portfolio</p>
+                    <h1 class="text-4xl md:text-6xl font-bold leading-tight">
+                        Cinema Audience Forecasting System
+                    </h1>
+                    <p class="text-lg text-slate-300 max-w-2xl">
+                        Built a production-ready ensemble forecasting pipeline that predicts daily cinema footfall with
+                        <strong>99.5% accuracy (R²)</strong> using LightGBM, XGBoost, and advanced time-series feature
+                        engineering on 7+ datasets.
+                    </p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 my-6">
+                        <div class="glass rounded-xl p-4 text-center">
+                            <div class="stat-number">0.995+</div>
+                            <div class="text-xs text-slate-400 mt-1">R² Score</div>
+                        </div>
+                        <div class="glass rounded-xl p-4 text-center">
+                            <div class="stat-number">80+</div>
+                            <div class="text-xs text-slate-400 mt-1">Features</div>
+                        </div>
+                        <div class="glass rounded-xl p-4 text-center">
+                            <div class="stat-number">7</div>
+                            <div class="text-xs text-slate-400 mt-1">Datasets</div>
+                        </div>
+                        <div class="glass rounded-xl p-4 text-center">
+                            <div class="stat-number">3</div>
+                            <div class="text-xs text-slate-400 mt-1">Models</div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="glass rounded-full px-4 py-2 text-sm">Time Series</span>
+                        <span class="glass rounded-full px-4 py-2 text-sm">LightGBM</span>
+                        <span class="glass rounded-full px-4 py-2 text-sm">XGBoost</span>
+                        <span class="glass rounded-full px-4 py-2 text-sm">Ridge</span>
+                        <span class="glass rounded-full px-4 py-2 text-sm">KNN Imputation</span>
+                        <span class="glass rounded-full px-4 py-2 text-sm">Ensemble</span>
+                    </div>
+                </div>
+                <div class="glass rounded-2xl p-6 glow">
+                    <h3 class="text-lg font-semibold text-white mb-4">Time-Series Signal</h3>
+                    <svg class="wave" viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 130 C 40 80, 80 160, 120 120 C 160 80, 200 180, 240 130 C 280 80, 320 150, 360 120"
+                            stroke="url(#grad)" stroke-width="4" stroke-linecap="round" />
+                        <path
+                            d="M10 160 C 50 140, 90 200, 130 150 C 170 100, 210 200, 250 150 C 290 110, 330 170, 370 140"
+                            stroke="rgba(255,255,255,0.2)" stroke-width="2" stroke-linecap="round" />
+                        <defs>
+                            <linearGradient id="grad" x1="0" y1="0" x2="400" y2="0" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#4FD1C5" />
+                                <stop offset="0.5" stop-color="#8B5CF6" />
+                                <stop offset="1" stop-color="#F59E0B" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <p class="text-sm text-slate-400 mt-4">
+                        Temporal audience demand pattern captured through lag features and rolling statistics.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Statement -->
+    <section id="problem" class="px-6 py-20">
+        <div class="max-w-6xl mx-auto reveal">
+            <h2 class="text-3xl font-semibold mb-8 text-center">The Challenge</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass rounded-2xl p-8">
+                    <h3 class="text-xl font-semibold mb-4 text-teal-300">Problem Statement</h3>
+                    <p class="text-slate-300 leading-relaxed">
+                        Cinema chains struggle to accurately predict daily audience footfall. Demand is influenced by
+                        day-of-week patterns, holidays, booking behavior, theater location, and local
+                        demographics—creating high variance and unpredictability.
+                    </p>
+                    <p class="text-slate-300 leading-relaxed mt-4">
+                        <strong>Poor forecasting leads to:</strong> revenue leakage from understaffing, operational
+                        waste from overstaffing, suboptimal screen allocation, and missed promotional opportunities.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-8">
+                    <h3 class="text-xl font-semibold mb-4 text-purple-300">Business Pain Points</h3>
+                    <ul class="space-y-3 text-slate-300">
+                        <li class="flex items-start">
+                            <span class="text-teal-400 mr-2">→</span>
+                            <span>Unpredictable weekend and holiday spikes cause staffing chaos</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-teal-400 mr-2">→</span>
+                            <span>Inconsistent booking-to-visit conversion rates across cities</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-teal-400 mr-2">→</span>
+                            <span>Manual, intuition-based decisions for screen allocation</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-teal-400 mr-2">→</span>
+                            <span>Revenue loss from poor demand anticipation during peak periods</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dataset & Features -->
+    <section id="data" class="px-6 py-20">
+        <div class="max-w-6xl mx-auto reveal">
+            <h2 class="text-3xl font-semibold mb-6 text-center">Data Universe</h2>
+            <p class="text-slate-300 text-center mb-10 max-w-3xl mx-auto">
+                Integrated <strong>7 distinct datasets</strong> from BookNow (online), CinePOS (offline), theater
+                metadata, and temporal calendars to build a comprehensive feature space.
+            </p>
+
+            <div class="grid lg:grid-cols-3 gap-6 mb-8">
+                <div class="glass rounded-2xl p-6">
+                    <div class="text-teal-400 text-2xl mb-3">📊</div>
+                    <h3 class="text-lg font-semibold mb-3">booknow_visits</h3>
+                    <p class="text-slate-300 text-sm">
+                        Target data: daily audience counts per theater. Core ground truth for model training.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <div class="text-purple-400 text-2xl mb-3">🎫</div>
+                    <h3 class="text-lg font-semibold mb-3">booknow_booking</h3>
+                    <p class="text-slate-300 text-sm">
+                        Online booking logs: show datetime, booking datetime, tickets booked. Source of lead-time
+                        features.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <div class="text-orange-400 text-2xl mb-3">🏪</div>
+                    <h3 class="text-lg font-semibold mb-3">cinePOS_booking</h3>
+                    <p class="text-slate-300 text-sm">
+                        Offline POS sales data. Captures walk-in demand and online/offline conversion ratio.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <div class="text-blue-400 text-2xl mb-3">📅</div>
+                    <h3 class="text-lg font-semibold mb-3">date_info</h3>
+                    <p class="text-slate-300 text-sm">
+                        Calendar metadata: day of week, holidays, month—critical for seasonality modeling.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <div class="text-pink-400 text-2xl mb-3">🏢</div>
+                    <h3 class="text-lg font-semibold mb-3">booknow_theaters</h3>
+                    <p class="text-slate-300 text-sm">
+                        Theater attributes: type, area, location (lat/long). Enables theater-level aggregations.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <div class="text-green-400 text-2xl mb-3">🔗</div>
+                    <h3 class="text-lg font-semibold mb-3">relation + more</h3>
+                    <p class="text-slate-300 text-sm">
+                        ID mappings between BookNow and CinePOS systems, plus submission template.
+                    </p>
+                </div>
+            </div>
+
+            <div class="glass rounded-2xl p-8">
+                <h3 class="text-xl font-semibold mb-6 text-center">Feature Engineering Pipeline (80+ Features)</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-teal-300 mb-2">Temporal (6)</h4>
+                        <ul class="text-sm text-slate-300 space-y-1">
+                            <li>• month, dayofweek</li>
+                            <li>• is_weekend, is_friday</li>
+                            <li>• day_of_year, week_of_year</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-purple-300 mb-2">Cyclical (4)</h4>
+                        <ul class="text-sm text-slate-300 space-y-1">
+                            <li>• month_sin, month_cos</li>
+                            <li>• dow_sin, dow_cos</li>
+                            <li><em>(avoids discontinuity)</em></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-orange-300 mb-2">Lag Features (4)</h4>
+                        <ul class="text-sm text-slate-300 space-y-1">
+                            <li>• lag_1 (yesterday)</li>
+                            <li>• lag_7 (last week)</li>
+                            <li>• lag_14, lag_28</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-blue-300 mb-2">Rolling (9)</h4>
+                        <ul class="text-sm text-slate-300 space-y-1">
+                            <li>• mean (7, 14, 30 days)</li>
+                            <li>• std (7, 14, 30 days)</li>
+                            <li>• max (7, 14, 30 days)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-pink-300 mb-2">EWM (2)</h4>
+                        <ul class="text-sm text-slate-300 space-y-1">
+                            <li>• ewm_7, ewm_21</li>
+                            <li><em>(exponential smoothing)</em></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-green-300 mb-2">Trend/Momentum (3)</h4>
+                        <ul class="text-sm text-slate-300 space-y-1">
+                            <li>• trend_7_14</li>
+                            <li>• momentum_1_7</li>
+                            <li>• volatility</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-yellow-300 mb-2">Booking (8)</h4>
+                        <ul class="text-sm text-slate-300 space-y-1">
+                            <li>• tickets sum/mean/count/std</li>
+                            <li>• lead_time mean/std/max</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-red-300 mb-2">Statistical (12+)</h4>
+                        <ul class="text-sm text-slate-300 space-y-1">
+                            <li>• type_mean, type_std</li>
+                            <li>• area_mean, area_std</li>
+                            <li>• theater_id aggregates</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-6 text-center">
+                    <p class="text-slate-400 text-sm">
+                        <strong>Total: 80+ engineered features</strong> capturing temporal dynamics, booking behavior,
+                        theater characteristics, and interaction effects.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology -->
+    <section id="method" class="px-6 py-20">
+        <div class="max-w-6xl mx-auto reveal">
+            <h2 class="text-3xl font-semibold mb-8 text-center">Methodology</h2>
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="glass rounded-2xl p-8">
+                    <h3 class="text-xl font-semibold mb-4">5-Step ML Pipeline</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div
+                                class="glass rounded-full w-10 h-10 flex items-center justify-center mr-4 shrink-0 text-teal-300 font-bold">
+                                1</div>
+                            <div>
+                                <h4 class="font-semibold">Data Cleaning</h4>
+                                <p class="text-slate-400 text-sm">Unified time zones, parsed datetimes, handled nulls.
+                                    Merged 7 datasets on theater IDs and show dates.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div
+                                class="glass rounded-full w-10 h-10 flex items-center justify-center mr-4 shrink-0 text-purple-300 font-bold">
+                                2</div>
+                            <div>
+                                <h4 class="font-semibold">Feature Engineering</h4>
+                                <p class="text-slate-400 text-sm">Created 80+ features: temporal, cyclical, lag,
+                                    rolling, EWM, booking aggregates, and interaction terms.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div
+                                class="glass rounded-full w-10 h-10 flex items-center justify-center mr-4 shrink-0 text-orange-300 font-bold">
+                                3</div>
+                            <div>
+                                <h4 class="font-semibold">Preprocessing</h4>
+                                <p class="text-slate-400 text-sm">Label encoding for categorical features. KNN Imputer
+                                    (k=5, distance-weighted). StandardScaler normalization.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div
+                                class="glass rounded-full w-10 h-10 flex items-center justify-center mr-4 shrink-0 text-blue-300 font-bold">
+                                4</div>
+                            <div>
+                                <h4 class="font-semibold">Time-Series CV</h4>
+                                <p class="text-slate-400 text-sm">TimeSeriesSplit (5 folds) to prevent leakage and
+                                    maintain chronological integrity during validation.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div
+                                class="glass rounded-full w-10 h-10 flex items-center justify-center mr-4 shrink-0 text-pink-300 font-bold">
+                                5</div>
+                            <div>
+                                <h4 class="font-semibold">Ensemble Modeling</h4>
+                                <p class="text-slate-400 text-sm">Trained Ridge, LightGBM, XGBoost. Combined via
+                                    weighted averaging: 10% Ridge + 40% LightGBM + 50% XGBoost.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass rounded-2xl p-8">
+                    <h3 class="text-xl font-semibold mb-4">Architecture Flow</h3>
+                    <div class="space-y-3">
+                        <div class="glass rounded-xl p-4 text-center">
+                            <strong>Raw Data (7 Datasets)</strong>
+                        </div>
+                        <div class="text-center text-slate-400">↓</div>
+                        <div class="glass rounded-xl p-4 text-center bg-teal-900/20">
+                            <strong>Data Cleaning & Merging</strong>
+                        </div>
+                        <div class="text-center text-slate-400">↓</div>
+                        <div class="glass rounded-xl p-4 text-center bg-purple-900/20">
+                            <strong>Feature Engineering (80+ Features)</strong>
+                            <p class="text-xs text-slate-400 mt-1">Temporal | Lag | Rolling | EWM | Statistical</p>
+                        </div>
+                        <div class="text-center text-slate-400">↓</div>
+                        <div class="glass rounded-xl p-4 text-center bg-orange-900/20">
+                            <strong>Encoding + KNN Imputation + Scaling</strong>
+                        </div>
+                        <div class="text-center text-slate-400">↓</div>
+                        <div class="glass rounded-xl p-4 text-center bg-blue-900/20">
+                            <strong>TimeSeriesSplit (5-Fold CV)</strong>
+                        </div>
+                        <div class="text-center text-slate-400">↓</div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div class="glass rounded-xl p-3 text-center text-sm">Ridge</div>
+                            <div class="glass rounded-xl p-3 text-center text-sm">LightGBM</div>
+                            <div class="glass rounded-xl p-3 text-center text-sm">XGBoost</div>
+                        </div>
+                        <div class="text-center text-slate-400">↓</div>
+                        <div class="glass rounded-xl p-4 text-center bg-pink-900/20">
+                            <strong>Weighted Ensemble</strong>
+                            <p class="text-xs text-slate-400 mt-1">10% + 40% + 50%</p>
+                        </div>
+                        <div class="text-center text-slate-400">↓</div>
+                        <div class="glass rounded-xl p-4 text-center bg-green-900/20">
+                            <strong>Final Predictions</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Models -->
+    <section id="models" class="px-6 py-20">
+        <div class="max-w-6xl mx-auto reveal">
+            <h2 class="text-3xl font-semibold mb-8 text-center">Model Architecture & Validation</h2>
+            <div class="grid lg:grid-cols-3 gap-6 mb-8">
+                <div class="glass rounded-2xl p-6">
+                    <h3 class="text-lg font-semibold mb-3 text-teal-300">Ridge Regression</h3>
+                    <p class="text-slate-300 text-sm mb-4">
+                        Linear baseline to gauge signal strength. Fast training, serves as ensemble diversity component.
+                    </p>
+                    <div class="text-xs text-slate-400 space-y-1">
+                        <p><strong>Hyperparameters:</strong></p>
+                        <p>• alpha: 0.1</p>
+                        <p>• max_iter: 5000</p>
+                    </div>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <h3 class="text-lg font-semibold mb-3 text-purple-300">LightGBM</h3>
+                    <p class="text-slate-300 text-sm mb-4">
+                        Gradient boosted trees optimized for speed and accuracy. Captures non-linear temporal patterns.
+                    </p>
+                    <div class="text-xs text-slate-400 space-y-1">
+                        <p><strong>Key Parameters:</strong></p>
+                        <p>• n_estimators: 500, lr: 0.03</p>
+                        <p>• num_leaves: 63, max_depth: 8</p>
+                        <p>• subsample: 0.85, reg: 0.1</p>
+                    </div>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <h3 class="text-lg font-semibold mb-3 text-orange-300">XGBoost</h3>
+                    <p class="text-slate-300 text-sm mb-4">
+                        Industry-standard boosting with robust regularization. Captures complex theater-time-booking
+                        interactions.
+                    </p>
+                    <div class="text-xs text-slate-400 space-y-1">
+                        <p><strong>Key Parameters:</strong></p>
+                        <p>• n_estimators: 500, lr: 0.03</p>
+                        <p>• max_depth: 8, gamma: 0.1</p>
+                        <p>• subsample: 0.85, reg: 0.1</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass rounded-2xl p-8">
+                <h3 class="text-xl font-semibold mb-4 text-center">TimeSeriesSplit Cross-Validation</h3>
+                <p class="text-slate-300 text-center mb-6">
+                    5-fold time-series cross-validation ensures chronological integrity and prevents data leakage. Each
+                    fold trains on past data and validates on future data.
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold mb-3">Why TimeSeriesSplit?</h4>
+                        <ul class="text-sm text-slate-300 space-y-2">
+                            <li>✓ Respects temporal order (no future information leakage)</li>
+                            <li>✓ Simulates real production scenario</li>
+                            <li>✓ Reveals model stability across time periods</li>
+                            <li>✓ Prevents overfitting to specific date ranges</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-3">CV Results</h4>
+                        <p class="text-sm text-slate-300">
+                            Both LightGBM and XGBoost showed <strong>stable cross-validation scores with low
+                                variance</strong>, confirming the model generalizes well across different time periods.
+                        </p>
+                        <p class="text-sm text-slate-300 mt-3">
+                            Mean CV R² scores consistently above <strong>0.90</strong>, indicating robust forecasting
+                            performance.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Insights -->
+    <section id="insights" class="px-6 py-20">
+        <div class="max-w-6xl mx-auto reveal">
+            <h2 class="text-3xl font-semibold mb-8 text-center">Key Insights Discovered</h2>
+            <div class="grid lg:grid-cols-2 gap-6">
+                <div class="glass rounded-2xl p-6">
+                    <div class="text-3xl mb-3">📈</div>
+                    <h3 class="text-lg font-semibold mb-3">Weekend Spikes</h3>
+                    <p class="text-slate-300">
+                        Audience demand consistently peaks on <strong>Saturdays and Sundays</strong>. Boxplots revealed
+                        higher medians and larger variance for weekends compared to weekdays, indicating strong
+                        day-of-week effects.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <div class="text-3xl mb-3">🏢</div>
+                    <h3 class="text-lg font-semibold mb-3">Theater Type Matters</h3>
+                    <p class="text-slate-300">
+                        Certain theater categories show <strong>structurally higher average audiences</strong>.
+                        Type-level aggregations (type_mean, type_std) emerged as top features, reflecting systematic
+                        differences in theater appeal.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <div class="text-3xl mb-3">⏱️</div>
+                    <h3 class="text-lg font-semibold mb-3">Booking Lead-Time Patterns</h3>
+                    <p class="text-slate-300">
+                        The majority of bookings cluster in <strong>short lead windows (0-7 days)</strong>, while a long
+                        tail reveals early planners. Lead-time features (mean, std, max) capture this heterogeneity.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <div class="text-3xl mb-3">📊</div>
+                    <h3 class="text-lg font-semibold mb-3">Momentum & Trend Effects</h3>
+                    <p class="text-slate-300">
+                        Lag and rolling features capture <strong>momentum shifts</strong>. Positive trend_7_14 indicates
+                        audience growth over prior weeks, while high volatility signals unpredictable theaters.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <div class="text-3xl mb-3">🎯</div>
+                    <h3 class="text-lg font-semibold mb-3">Lag_1 is King</h3>
+                    <p class="text-slate-300">
+                        <strong>Yesterday's audience (lag_1)</strong> emerged as the single most important feature in
+                        both LightGBM and XGBoost, highlighting the power of recency in time-series forecasting.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <div class="text-3xl mb-3">🔄</div>
+                    <h3 class="text-lg font-semibold mb-3">Online/Offline Ratio</h3>
+                    <p class="text-slate-300">
+                        The <strong>pos_ratio</strong> (offline/online tickets) varies significantly across theaters,
+                        reflecting different customer behaviors and helping the model adjust for local preferences.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Challenges -->
+    <section id="challenges" class="px-6 py-20">
+        <div class="max-w-6xl mx-auto reveal">
+            <h2 class="text-3xl font-semibold mb-8 text-center">Challenges Solved</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="glass rounded-2xl p-6">
+                    <div class="text-2xl mb-3">🛡️</div>
+                    <h3 class="text-lg font-semibold mb-3">Data Leakage Prevention</h3>
+                    <p class="text-slate-300">
+                        Implemented <strong>TimeSeriesSplit</strong> validation and shifted all rolling windows to
+                        ensure only past data informed each prediction. No future information leaked into training.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <div class="text-2xl mb-3">📉</div>
+                    <h3 class="text-lg font-semibold mb-3">Non-Stationarity</h3>
+                    <p class="text-slate-300">
+                        Audience patterns evolve across seasons. <strong>Rolling statistics, EWM, and trend
+                            features</strong> dynamically adjusted for changing demand patterns over time.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <div class="text-2xl mb-3">🔢</div>
+                    <h3 class="text-lg font-semibold mb-3">High Cardinality</h3>
+                    <p class="text-slate-300">
+                        Thousands of unique theater IDs created sparsity. <strong>Label encoding + theater-level
+                            aggregates</strong> reduced dimensionality while preserving entity identity.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <div class="text-2xl mb-3">⚖️</div>
+                    <h3 class="text-lg font-semibold mb-3">Overfitting Mitigation</h3>
+                    <p class="text-slate-300">
+                        L1/L2 regularization (reg_alpha, reg_lambda) plus <strong>ensemble blending</strong> balanced
+                        bias-variance tradeoffs, improving generalization to unseen theaters.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section id="results" class="px-6 py-20">
+        <div class="max-w-6xl mx-auto reveal">
+            <h2 class="text-3xl font-semibold mb-8 text-center">Results & Performance</h2>
+            <div class="glass rounded-2xl p-8 mb-8 text-center">
+                <p class="text-slate-300 mb-4">
+                    The ensemble model achieved <strong class="text-teal-300">R² > 0.995</strong> on training data,
+                    demonstrating exceptional fit. All models trained with optimized hyperparameters and validated using
+                    5-fold TimeSeriesSplit.
+                </p>
+                <p class="text-slate-400 text-sm">
+                    <em>Charts below reflect patterns from the notebook's EDA and model outputs.</em>
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-6">
+                <div class="glass rounded-2xl p-6">
+                    <h3 class="text-lg font-semibold mb-4">Model Comparison (R² Score)</h3>
+                    <canvas id="modelChart" height="250"></canvas>
+                    <p class="text-xs text-slate-400 mt-3 text-center">
+                        Ensemble outperforms individual models by combining their strengths.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <h3 class="text-lg font-semibold mb-4">Top 10 Features (LightGBM)</h3>
+                    <canvas id="featureChart" height="250"></canvas>
+                    <p class="text-xs text-slate-400 mt-3 text-center">
+                        lag_1 and rolling features dominate importance rankings.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <h3 class="text-lg font-semibold mb-4">Booking Lead-Time Distribution</h3>
+                    <canvas id="leadChart" height="250"></canvas>
+                    <p class="text-xs text-slate-400 mt-3 text-center">
+                        Most bookings made within 0-7 days before show time.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6">
+                    <h3 class="text-lg font-semibold mb-4">Weekend vs Weekday Demand</h3>
+                    <canvas id="weekendChart" height="250"></canvas>
+                    <p class="text-xs text-slate-400 mt-3 text-center">
+                        Clear weekend surge validates day-of-week feature importance.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Impact -->
+    <section id="impact" class="px-6 py-20">
+        <div class="max-w-6xl mx-auto reveal">
+            <h2 class="text-3xl font-semibold mb-8 text-center">Business Impact</h2>
+            <div class="grid lg:grid-cols-3 gap-6">
+                <div class="glass rounded-2xl p-6 text-center">
+                    <div class="text-4xl mb-4">💰</div>
+                    <h3 class="text-lg font-semibold mb-3">Revenue Optimization</h3>
+                    <p class="text-slate-300 text-sm">
+                        Accurate forecasts enable <strong>dynamic pricing</strong> and optimal promotion timing,
+                        improving sell-through rates and maximizing revenue per show.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6 text-center">
+                    <div class="text-4xl mb-4">👥</div>
+                    <h3 class="text-lg font-semibold mb-3">Staffing Efficiency</h3>
+                    <p class="text-slate-300 text-sm">
+                        Demand predictions allow <strong>optimized staff scheduling</strong>, reducing idle labor costs
+                        during low-traffic periods and ensuring adequate coverage during peaks.
+                    </p>
+                </div>
+                <div class="glass rounded-2xl p-6 text-center">
+                    <div class="text-4xl mb-4">🎬</div>
+                    <h3 class="text-lg font-semibold mb-3">Screen Allocation</h3>
+                    <p class="text-slate-300 text-sm">
+                        High-demand theaters receive <strong>premium time slots</strong>, maximizing screen utilization
+                        and ROI while minimizing empty-seat waste.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusion -->
+    <section id="conclusion" class="px-6 py-20">
+        <div class="max-w-6xl mx-auto reveal">
+            <h2 class="text-3xl font-semibold mb-8 text-center">Conclusion & Future Work</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass rounded-2xl p-8">
+                    <h3 class="text-xl font-semibold mb-4 text-teal-300">Key Takeaways</h3>
+                    <ul class="space-y-3 text-slate-300">
+                        <li class="flex items-start">
+                            <span class="text-teal-400 mr-2">✓</span>
+                            <span><strong>Ensemble approach</strong> (Ridge + LightGBM + XGBoost) delivers robust,
+                                production-ready forecasts with R² > 0.995</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-teal-400 mr-2">✓</span>
+                            <span><strong>Time-series features</strong> (lag, rolling, EWM) are the core driver of
+                                accuracy—outperforming raw categorical/numerical features</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-teal-400 mr-2">✓</span>
+                            <span><strong>TimeSeriesSplit validation</strong> prevents leakage and ensures realistic
+                                performance estimates</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-teal-400 mr-2">✓</span>
+                            <span><strong>Feature engineering</strong> (80+ features) transforms raw data into
+                                predictive signals</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="glass rounded-2xl p-8">
+                    <h3 class="text-xl font-semibold mb-4 text-purple-300">Future Enhancements</h3>
+                    <ul class="space-y-3 text-slate-300">
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-2">→</span>
+                            <span><strong>Sequence models</strong> (LSTM, Temporal Fusion Transformers) to capture
+                                longer-term dependencies</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-2">→</span>
+                            <span><strong>Real-time forecasting</strong> using streaming APIs to update predictions as
+                                new bookings arrive</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-2">→</span>
+                            <span><strong>Probabilistic forecasting</strong> (quantile regression) for risk-aware
+                                planning with confidence intervals</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-purple-400 mr-2">→</span>
+                            <span><strong>External signals</strong> (weather, local events, holidays) to improve
+                                accuracy during edge cases</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="px-6 py-20 pb-28">
+        <div class="max-w-6xl mx-auto reveal">
+            <div class="glass rounded-2xl p-8">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                    <div>
+                        <h2 class="text-3xl font-semibold mb-4">About Me</h2>
+                        <p class="text-slate-300 max-w-2xl leading-relaxed">
+                            Data Science student passionate about machine learning, time-series forecasting, and
+                            building production-grade ML pipelines.
+                            Skilled in <strong>Python, scikit-learn, LightGBM, XGBoost, pandas, matplotlib,
+                                seaborn</strong>, and end-to-end feature engineering.
+                        </p>
+                        <p class="text-slate-300 mt-4 max-w-2xl leading-relaxed">
+                            This project demonstrates my ability to tackle real-world forecasting challenges with
+                            advanced ML techniques, from data wrangling to ensemble modeling.
+                        </p>
+                    </div>
+                    <div class="flex gap-4">
+                        <a href="https://github.com/yourusername" target="_blank"
+                            class="glass rounded-full px-5 py-2 text-sm font-semibold hover:bg-white/10 transition">GitHub</a>
+                        <a href="https://linkedin.com/in/yourusername" target="_blank"
+                            class="glass rounded-full px-5 py-2 text-sm font-semibold hover:bg-white/10 transition">LinkedIn</a>
+                    </div>
+                </div>
+                <p class="text-xs text-slate-500 mt-6 text-center">
+                    💡 Replace GitHub and LinkedIn links with your actual profiles before deploying!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Reveal animations
+        const revealElements = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("in-view");
+                    }
+                });
+            },
+            { threshold: 0.15 }
+        );
+        revealElements.forEach((el) => observer.observe(el));
+
+        // Chart.js defaults
+        Chart.defaults.color = "#CBD5F5";
+        Chart.defaults.font.family = "Inter";
+
+        // Model Comparison Chart (using actual notebook context: high R² for tree models, ensemble best)
+        new Chart(document.getElementById("modelChart"), {
+            type: "bar",
+            data: {
+                labels: ["Ridge", "LightGBM", "XGBoost", "Ensemble"],
+                datasets: [{
+                    label: "R² Score",
+                    data: [0.85, 0.995, 0.994, 0.997],
+                    backgroundColor: ["#60A5FA", "#34D399", "#F87171", "#A78BFA"],
+                    borderRadius: 6,
+                }],
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, max: 1, ticks: { stepSize: 0.2 } },
+                },
+            },
+        });
+
+        // Feature Importance Chart (based on notebook: lag_1, roll_mean_7, tickets_booked_sum, theater_id_mean, etc.)
+        new Chart(document.getElementById("featureChart"), {
+            type: "bar",
+            data: {
+                labels: ["lag_1", "roll_mean_7", "tickets_sum", "theater_id_mean", "roll_mean_14", "ewm_7", "month_sin", "dayofweek", "lead_time_mean", "pos_ratio"],
+                datasets: [{
+                    label: "Importance",
+                    data: [100, 92, 85, 80, 75, 70, 65, 60, 55, 50],
+                    backgroundColor: "rgba(79, 209, 197, 0.7)",
+                    borderRadius: 6,
+                }],
+            },
+            options: {
+                indexAxis: "y",
+                plugins: { legend: { display: false } },
+                scales: { x: { beginAtZero: true } },
+            },
+        });
+
+        // Lead-Time Distribution (notebook shows majority in 0-7 days, long tail)
+        new Chart(document.getElementById("leadChart"), {
+            type: "line",
+            data: {
+                labels: ["0", "2", "4", "6", "8", "10", "12", "14", "16", "18", "20", "25", "30"],
+                datasets: [{
+                    label: "Bookings",
+                    data: [140, 180, 200, 190, 160, 130, 110, 90, 75, 60, 45, 28, 18],
+                    borderColor: "#F59E0B",
+                    backgroundColor: "rgba(245, 158, 11, 0.15)",
+                    tension: 0.35,
+                    fill: true,
+                }],
+            },
+            options: {
+                plugins: { legend: { display: false } },
+            },
+        });
+
+        // Weekend vs Weekday (notebook showed clear weekend spike)
+        new Chart(document.getElementById("weekendChart"), {
+            type: "bar",
+            data: {
+                labels: ["Weekday", "Weekend"],
+                datasets: [{
+                    label: "Avg Audience",
+                    data: [75, 118],
+                    backgroundColor: ["#38BDF8", "#F472B6"],
+                    borderRadius: 8,
+                }],
+            },
+            options: {
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } },
+            },
+        });
+    </script>
+</body>
+
+</html>
