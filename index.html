@@ -129,10 +129,190 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+
+        /* Enhanced hover effects */
+        .hover-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .hover-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(79, 209, 197, 0.3), 0 0 60px rgba(139, 92, 246, 0.2);
+        }
+
+        .hover-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, rgba(79, 209, 197, 0.3), rgba(139, 92, 246, 0.3));
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: -1;
+        }
+
+        .hover-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Tooltip styling */
+        .tooltip {
+            position: absolute;
+            background: rgba(10, 15, 30, 0.95);
+            border: 1px solid rgba(79, 209, 197, 0.4);
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 0.875rem;
+            color: #fff;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            white-space: nowrap;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+        }
+
+        .tooltip-container:hover .tooltip {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tooltip::before {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: inherit;
+            border-right: 1px solid rgba(79, 209, 197, 0.4);
+            border-bottom: 1px solid rgba(79, 209, 197, 0.4);
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: float 8s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+            10% {
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateY(-100vh) scale(1);
+            }
+            90% {
+                opacity: 0.3;
+            }
+        }
+
+        /* Pulsing animation for stats */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 0.9;
+            }
+        }
+
+        .stat-card {
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        /* Smooth scroll with offset */
+        html {
+            scroll-padding-top: 100px;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #4FD1C5, #8B5CF6, #F59E0B);
+            transform-origin: 0%;
+            z-index: 9999;
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Glowing text effect */
+        .glow-text {
+            text-shadow: 0 0 20px rgba(79, 209, 197, 0.5), 0 0 40px rgba(79, 209, 197, 0.3);
+        }
+
+        /* Interactive nav */
+        .nav-pill a {
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-pill a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #4FD1C5, #8B5CF6);
+            transition: width 0.3s ease;
+        }
+
+        .nav-pill a:hover::after {
+            width: 100%;
+        }
+
+        /* Chart container animations */
+        .chart-container {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .chart-container.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Gradient border animation */
+        @keyframes borderGlow {
+            0%, 100% {
+                border-color: rgba(79, 209, 197, 0.3);
+            }
+            50% {
+                border-color: rgba(139, 92, 246, 0.6);
+            }
+        }
+
+        .glow-border {
+            animation: borderGlow 3s ease-in-out infinite;
+        }
     </style>
 </head>
 
 <body class="bg-animated noise text-slate-100">
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <!-- Floating Particles -->
+    <div id="particles"></div>
     <!-- Floating Nav -->
     <nav class="fixed top-6 left-1/2 z-50 -translate-x-1/2 nav-pill rounded-full px-6 py-3 text-sm tracking-wide">
         <div class="flex items-center gap-5 text-slate-300">
@@ -162,21 +342,25 @@
                         engineering on 7+ datasets.
                     </p>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 my-6">
-                        <div class="glass rounded-xl p-4 text-center">
-                            <div class="stat-number">0.995+</div>
+                        <div class="glass rounded-xl p-4 text-center hover-card stat-card tooltip-container">
+                            <div class="stat-number counter" data-target="0.995">0.000</div>
                             <div class="text-xs text-slate-400 mt-1">R² Score</div>
+                            <div class="tooltip">Near-perfect model accuracy</div>
                         </div>
-                        <div class="glass rounded-xl p-4 text-center">
-                            <div class="stat-number">80+</div>
+                        <div class="glass rounded-xl p-4 text-center hover-card stat-card tooltip-container">
+                            <div class="stat-number counter" data-target="80">0</div>
                             <div class="text-xs text-slate-400 mt-1">Features</div>
+                            <div class="tooltip">Engineered time-series features</div>
                         </div>
-                        <div class="glass rounded-xl p-4 text-center">
-                            <div class="stat-number">7</div>
+                        <div class="glass rounded-xl p-4 text-center hover-card stat-card tooltip-container">
+                            <div class="stat-number counter" data-target="7">0</div>
                             <div class="text-xs text-slate-400 mt-1">Datasets</div>
+                            <div class="tooltip">Integrated data sources</div>
                         </div>
-                        <div class="glass rounded-xl p-4 text-center">
-                            <div class="stat-number">3</div>
+                        <div class="glass rounded-xl p-4 text-center hover-card stat-card tooltip-container">
+                            <div class="stat-number counter" data-target="3">0</div>
                             <div class="text-xs text-slate-400 mt-1">Models</div>
+                            <div class="tooltip">Ensemble approach</div>
                         </div>
                     </div>
                     <div class="flex flex-wrap gap-3">
@@ -217,8 +401,8 @@
         <div class="max-w-6xl mx-auto reveal">
             <h2 class="text-3xl font-semibold mb-8 text-center">The Challenge</h2>
             <div class="grid md:grid-cols-2 gap-8">
-                <div class="glass rounded-2xl p-8">
-                    <h3 class="text-xl font-semibold mb-4 text-teal-300">Problem Statement</h3>
+                <div class="glass rounded-2xl p-8 hover-card">
+                    <h3 class="text-xl font-semibold mb-4 text-teal-300 glow-text">Problem Statement</h3>
                     <p class="text-slate-300 leading-relaxed">
                         Cinema chains struggle to accurately predict daily audience footfall. Demand is influenced by
                         day-of-week patterns, holidays, booking behavior, theater location, and local
@@ -229,8 +413,8 @@
                         waste from overstaffing, suboptimal screen allocation, and missed promotional opportunities.
                     </p>
                 </div>
-                <div class="glass rounded-2xl p-8">
-                    <h3 class="text-xl font-semibold mb-4 text-purple-300">Business Pain Points</h3>
+                <div class="glass rounded-2xl p-8 hover-card">
+                    <h3 class="text-xl font-semibold mb-4 text-purple-300 glow-text">Business Pain Points</h3>
                     <ul class="space-y-3 text-slate-300">
                         <li class="flex items-start">
                             <span class="text-teal-400 mr-2">→</span>
@@ -264,14 +448,15 @@
             </p>
 
             <div class="grid lg:grid-cols-3 gap-6 mb-8">
-                <div class="glass rounded-2xl p-6">
+                <div class="glass rounded-2xl p-6 hover-card tooltip-container">
                     <div class="text-teal-400 text-2xl mb-3">📊</div>
                     <h3 class="text-lg font-semibold mb-3">booknow_visits</h3>
                     <p class="text-slate-300 text-sm">
                         Target data: daily audience counts per theater. Core ground truth for model training.
                     </p>
+                    <div class="tooltip">Primary target variable for predictions</div>
                 </div>
-                <div class="glass rounded-2xl p-6">
+                <div class="glass rounded-2xl p-6 hover-card tooltip-container">
                     <div class="text-purple-400 text-2xl mb-3">🎫</div>
                     <h3 class="text-lg font-semibold mb-3">booknow_booking</h3>
                     <p class="text-slate-300 text-sm">
@@ -285,27 +470,31 @@
                     <p class="text-slate-300 text-sm">
                         Offline POS sales data. Captures walk-in demand and online/offline conversion ratio.
                     </p>
+                    <div class="tooltip">Walk-in customer analytics</div>
                 </div>
-                <div class="glass rounded-2xl p-6">
+                <div class="glass rounded-2xl p-6 hover-card tooltip-container">
                     <div class="text-blue-400 text-2xl mb-3">📅</div>
                     <h3 class="text-lg font-semibold mb-3">date_info</h3>
                     <p class="text-slate-300 text-sm">
                         Calendar metadata: day of week, holidays, month—critical for seasonality modeling.
                     </p>
+                    <div class="tooltip">Temporal features for seasonality</div>
                 </div>
-                <div class="glass rounded-2xl p-6">
+                <div class="glass rounded-2xl p-6 hover-card tooltip-container">
                     <div class="text-pink-400 text-2xl mb-3">🏢</div>
                     <h3 class="text-lg font-semibold mb-3">booknow_theaters</h3>
                     <p class="text-slate-300 text-sm">
                         Theater attributes: type, area, location (lat/long). Enables theater-level aggregations.
                     </p>
+                    <div class="tooltip">Geographic and categorical features</div>
                 </div>
-                <div class="glass rounded-2xl p-6">
+                <div class="glass rounded-2xl p-6 hover-card tooltip-container">
                     <div class="text-green-400 text-2xl mb-3">🔗</div>
                     <h3 class="text-lg font-semibold mb-3">relation + more</h3>
                     <p class="text-slate-300 text-sm">
                         ID mappings between BookNow and CinePOS systems, plus submission template.
                     </p>
+                    <div class="tooltip">Cross-platform data integration</div>
                 </div>
             </div>
 
@@ -679,33 +868,37 @@
             </div>
 
             <div class="grid lg:grid-cols-2 gap-6">
-                <div class="glass rounded-2xl p-6">
+                <div class="glass rounded-2xl p-6 hover-card chart-container tooltip-container">
                     <h3 class="text-lg font-semibold mb-4">Model Comparison (R² Score)</h3>
                     <canvas id="modelChart" height="250"></canvas>
                     <p class="text-xs text-slate-400 mt-3 text-center">
                         Ensemble outperforms individual models by combining their strengths.
                     </p>
+                    <div class="tooltip">Ensemble = 10% Ridge + 40% LightGBM + 50% XGBoost</div>
                 </div>
-                <div class="glass rounded-2xl p-6">
+                <div class="glass rounded-2xl p-6 hover-card chart-container tooltip-container">
                     <h3 class="text-lg font-semibold mb-4">Top 10 Features (LightGBM)</h3>
                     <canvas id="featureChart" height="250"></canvas>
                     <p class="text-xs text-slate-400 mt-3 text-center">
                         lag_1 and rolling features dominate importance rankings.
                     </p>
+                    <div class="tooltip">Feature importance from LightGBM model training</div>
                 </div>
-                <div class="glass rounded-2xl p-6">
+                <div class="glass rounded-2xl p-6 hover-card chart-container tooltip-container">
                     <h3 class="text-lg font-semibold mb-4">Booking Lead-Time Distribution</h3>
                     <canvas id="leadChart" height="250"></canvas>
                     <p class="text-xs text-slate-400 mt-3 text-center">
                         Most bookings made within 0-7 days before show time.
                     </p>
+                    <div class="tooltip">Days between booking and show date</div>
                 </div>
-                <div class="glass rounded-2xl p-6">
+                <div class="glass rounded-2xl p-6 hover-card chart-container tooltip-container">
                     <h3 class="text-lg font-semibold mb-4">Weekend vs Weekday Demand</h3>
                     <canvas id="weekendChart" height="250"></canvas>
                     <p class="text-xs text-slate-400 mt-3 text-center">
                         Clear weekend surge validates day-of-week feature importance.
                     </p>
+                    <div class="tooltip">Average audience count by day type</div>
                 </div>
             </div>
         </div>
@@ -929,6 +1122,169 @@
                 scales: { y: { beginAtZero: true } },
             },
         });
+
+    // ===== Interactive Features =====
+
+    // 1. Smooth Scrolling for Nav Links
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+
+    // 2. Progress Bar on Scroll
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollPercent = (scrollTop / scrollHeight) * 100;
+        document.getElementById('progressBar').style.transform = `scaleX(${scrollPercent / 100})`;
+    });
+
+    // 3. Counter Animation for Stats
+    function animateCounter(element) {
+        const target = parseFloat(element.getAttribute('data-target'));
+        const duration = 2000; // 2 seconds
+        const startTime = performance.now();
+        const isDecimal = target < 10 && target > 0;
+
+        function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const current = progress * target;
+
+            if (isDecimal) {
+                element.textContent = current.toFixed(3);
+            } else {
+                element.textContent = Math.round(current);
+            }
+
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            }
+        }
+
+        requestAnimationFrame(update);
+    }
+
+    // Trigger counter animation when visible
+    const statObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counters = entry.target.querySelectorAll('.counter');
+                counters.forEach(counter => {
+                    if (!counter.classList.contains('counted')) {
+                        animateCounter(counter);
+                        counter.classList.add('counted');
+                    }
+                });
+            }
+        });
+    }, { threshold: 0.5 });
+
+    const statsGrid = document.querySelector('.grid.grid-cols-2.md\\:grid-cols-4');
+    if (statsGrid) statObserver.observe(statsGrid);
+
+    // 4. Reveal Animation for Sections
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // 5. Chart Container Animations
+    const chartObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.chart-container').forEach(el => chartObserver.observe(el));
+
+    // 6. Floating Particles Animation
+    function createParticles() {
+        const container = document.getElementById('particles');
+        const particleCount = 30;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            container.appendChild(particle);
+        }
+    }
+
+    createParticles();
+
+    // 7. Pulse Effect on Stat Cards
+    setInterval(() => {
+        document.querySelectorAll('.stat-card').forEach((card, index) => {
+            setTimeout(() => {
+                card.style.animation = 'pulse 0.6s ease-in-out';
+                setTimeout(() => {
+                    card.style.animation = '';
+                }, 600);
+            }, index * 200);
+        });
+    }, 8000); // Pulse every 8 seconds
+
+    // 8. Active Nav Link Highlighting on Scroll
+    window.addEventListener('scroll', () => {
+        let current = '';
+        const sections = document.querySelectorAll('section[id]');
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (window.pageYOffset >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        document.querySelectorAll('nav a').forEach(link => {
+            link.classList.remove('text-white');
+            if (link.getAttribute('href').substring(1) === current) {
+                link.classList.add('text-white');
+            }
+        });
+    });
+
+    // 9. Tooltip Positioning (auto-adjust if near edge)
+    document.querySelectorAll('.tooltip-container').forEach(container => {
+        container.addEventListener('mouseenter', function () {
+            const tooltip = this.querySelector('.tooltip');
+            if (tooltip) {
+                const rect = tooltip.getBoundingClientRect();
+                if (rect.right > window.innerWidth) {
+                    tooltip.style.left = 'auto';
+                    tooltip.style.right = '0';
+                }
+                if (rect.left < 0) {
+                    tooltip.style.left = '0';
+                    tooltip.style.right = 'auto';
+                }
+            }
+        });
+    });
+
+    // 10. Add Glow Effect to Hero Title on Load
+    window.addEventListener('load', () => {
+        const heroTitle = document.querySelector('#hero h1');
+        if (heroTitle) {
+            heroTitle.classList.add('glow-text');
+        }
+    });
     </script>
 </body>
 
