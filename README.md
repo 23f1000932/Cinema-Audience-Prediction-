@@ -408,10 +408,11 @@ xdg-open index.html  # Linux
 
 ## 📧 Contact
 
-**Author:** [Your Name]  
-**Email:** your.email@example.com  
-**LinkedIn:** [linkedin.com/in/yourprofile](https://linkedin.com)  
-**Portfolio:** [View Live Website](https://your-username.github.io/Cinema-Audience-Prediction-)
+**Author:** [Ayan Hussain]  
+**Email:** ayanhussain4212@gmail.com
+**LinkedIn:** [linkedin.com/in/yourprofile](https://www.linkedin.com/in/ayan-hussain-58752626b/)  
+**My Website:** [Portfolio](https://23f1000932.github.io/Ayan-Hussain/)
+**Portfolio:** [View Live Website](https://23f1000932.github.io/Cinema-Audience-Prediction-/)
 
 ---
 
