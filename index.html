@@ -29,9 +29,9 @@
             --warm-peach: #FFE4D1;
             --accent-coral: #FF8B7B;
             --accent-terracotta: #D2691E;
-            --text-dark: #2C1810;
-            --text-medium: #5C4033;
-            --text-light: #8B7355;
+            --text-dark: #1a0f08;
+            --text-medium: #3d2817;
+            --text-light: #5c3d2e;
         }
 
         html {
@@ -300,7 +300,7 @@
                     </div>
                 </div>
                 <div class="glass rounded-2xl p-6 glow">
-                    <h3 class="text-lg font-semibold text-white mb-4">Time-Series Signal</h3>
+                    <h3 class="text-lg font-semibold mb-4" style="color: var(--text-dark);">Time-Series Signal</h3>
                     <svg class="wave" viewBox="0 0 400 220" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10 130 C 40 80, 80 160, 120 120 C 160 80, 200 180, 240 130 C 280 80, 320 150, 360 120"
                             stroke="url(#grad)" stroke-width="4" stroke-linecap="round" />
@@ -371,57 +371,57 @@
     <!-- Dataset & Features -->
     <section id="data" class="px-6 py-20">
         <div class="max-w-6xl mx-auto reveal">
-            <h2 class="text-3xl font-semibold mb-6 text-center">Data Universe</h2>
-            <p class="text-slate-300 text-center mb-10 max-w-3xl mx-auto">
+            <h2 class="text-3xl font-semibold mb-6 text-center" style="color: var(--text-dark);">Data Universe</h2>
+            <p class="text-center mb-10 max-w-3xl mx-auto" style="color: var(--text-medium);">
                 Integrated <strong>7 distinct datasets</strong> from BookNow (online), CinePOS (offline), theater
                 metadata, and temporal calendars to build a comprehensive feature space.
             </p>
 
             <div class="grid lg:grid-cols-3 gap-6 mb-8">
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
-                    <div class="text-teal-400 text-2xl mb-3">📊</div>
-                    <h3 class="text-lg font-semibold mb-3">booknow_visits</h3>
-                    <p class="text-slate-300 text-sm">
+                    <div class="text-2xl mb-3">📊</div>
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">booknow_visits</h3>
+                    <p class="text-sm" style="color: var(--text-medium);">
                         Target data: daily audience counts per theater. Core ground truth for model training.
                     </p>
                     <div class="tooltip">Primary target variable for predictions</div>
                 </div>
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
-                    <div class="text-purple-400 text-2xl mb-3">🎫</div>
-                    <h3 class="text-lg font-semibold mb-3">booknow_booking</h3>
-                    <p class="text-slate-300 text-sm">
+                    <div class="text-2xl mb-3">🎫</div>
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">booknow_booking</h3>
+                    <p class="text-sm" style="color: var(--text-medium);">
                         Online booking logs: show datetime, booking datetime, tickets booked. Source of lead-time
                         features.
                     </p>
                 </div>
                 <div class="glass rounded-2xl p-6">
-                    <div class="text-orange-400 text-2xl mb-3">🏪</div>
-                    <h3 class="text-lg font-semibold mb-3">cinePOS_booking</h3>
-                    <p class="text-slate-300 text-sm">
+                    <div class="text-2xl mb-3">🏪</div>
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">cinePOS_booking</h3>
+                    <p class="text-sm" style="color: var(--text-medium);">
                         Offline POS sales data. Captures walk-in demand and online/offline conversion ratio.
                     </p>
                     <div class="tooltip">Walk-in customer analytics</div>
                 </div>
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
-                    <div class="text-blue-400 text-2xl mb-3">📅</div>
-                    <h3 class="text-lg font-semibold mb-3">date_info</h3>
-                    <p class="text-slate-300 text-sm">
+                    <div class="text-2xl mb-3">📅</div>
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">date_info</h3>
+                    <p class="text-sm" style="color: var(--text-medium);">
                         Calendar metadata: day of week, holidays, month—critical for seasonality modeling.
                     </p>
                     <div class="tooltip">Temporal features for seasonality</div>
                 </div>
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
-                    <div class="text-pink-400 text-2xl mb-3">🏢</div>
-                    <h3 class="text-lg font-semibold mb-3">booknow_theaters</h3>
-                    <p class="text-slate-300 text-sm">
+                    <div class="text-2xl mb-3">🏢</div>
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">booknow_theaters</h3>
+                    <p class="text-sm" style="color: var(--text-medium);">
                         Theater attributes: type, area, location (lat/long). Enables theater-level aggregations.
                     </p>
                     <div class="tooltip">Geographic and categorical features</div>
                 </div>
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
-                    <div class="text-green-400 text-2xl mb-3">🔗</div>
-                    <h3 class="text-lg font-semibold mb-3">relation + more</h3>
-                    <p class="text-slate-300 text-sm">
+                    <div class="text-2xl mb-3">🔗</div>
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">relation + more</h3>
+                    <p class="text-sm" style="color: var(--text-medium);">
                         ID mappings between BookNow and CinePOS systems, plus submission template.
                     </p>
                     <div class="tooltip">Cross-platform data integration</div>
@@ -429,65 +429,66 @@
             </div>
 
             <div class="glass rounded-2xl p-8">
-                <h3 class="text-xl font-semibold mb-6 text-center">Feature Engineering Pipeline (80+ Features)</h3>
+                <h3 class="text-xl font-semibold mb-6 text-center" style="color: var(--text-dark);">Feature Engineering Pipeline (80+
+                    Features)</h3>
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div>
-                        <h4 class="font-semibold text-teal-300 mb-2">Temporal (6)</h4>
-                        <ul class="text-sm text-slate-300 space-y-1">
+                        <h4 class="font-semibold mb-2" style="color: #D2691E;">Temporal (6)</h4>
+                        <ul class="text-sm space-y-1" style="color: var(--text-medium);">
                             <li>• month, dayofweek</li>
                             <li>• is_weekend, is_friday</li>
                             <li>• day_of_year, week_of_year</li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-semibold text-purple-300 mb-2">Cyclical (4)</h4>
-                        <ul class="text-sm text-slate-300 space-y-1">
+                        <h4 class="font-semibold mb-2" style="color: #FF8B7B;">Cyclical (4)</h4>
+                        <ul class="text-sm space-y-1" style="color: var(--text-medium);">
                             <li>• month_sin, month_cos</li>
                             <li>• dow_sin, dow_cos</li>
                             <li><em>(avoids discontinuity)</em></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-semibold text-orange-300 mb-2">Lag Features (4)</h4>
-                        <ul class="text-sm text-slate-300 space-y-1">
+                        <h4 class="font-semibold mb-2" style="color: #D2691E;">Lag Features (4)</h4>
+                        <ul class="text-sm space-y-1" style="color: var(--text-medium);">
                             <li>• lag_1 (yesterday)</li>
                             <li>• lag_7 (last week)</li>
                             <li>• lag_14, lag_28</li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-semibold text-blue-300 mb-2">Rolling (9)</h4>
-                        <ul class="text-sm text-slate-300 space-y-1">
+                        <h4 class="font-semibold mb-2" style="color: #CD853F;">Rolling (9)</h4>
+                        <ul class="text-sm space-y-1" style="color: var(--text-medium);">
                             <li>• mean (7, 14, 30 days)</li>
                             <li>• std (7, 14, 30 days)</li>
                             <li>• max (7, 14, 30 days)</li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-semibold text-pink-300 mb-2">EWM (2)</h4>
-                        <ul class="text-sm text-slate-300 space-y-1">
+                        <h4 class="font-semibold mb-2" style="color: #FF8B7B;">EWM (2)</h4>
+                        <ul class="text-sm space-y-1" style="color: var(--text-medium);">
                             <li>• ewm_7, ewm_21</li>
                             <li><em>(exponential smoothing)</em></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-semibold text-green-300 mb-2">Trend/Momentum (3)</h4>
-                        <ul class="text-sm text-slate-300 space-y-1">
+                        <h4 class="font-semibold mb-2" style="color: #D2691E;">Trend/Momentum (3)</h4>
+                        <ul class="text-sm space-y-1" style="color: var(--text-medium);">
                             <li>• trend_7_14</li>
                             <li>• momentum_1_7</li>
                             <li>• volatility</li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-semibold text-yellow-300 mb-2">Booking (8)</h4>
-                        <ul class="text-sm text-slate-300 space-y-1">
+                        <h4 class="font-semibold mb-2" style="color: #CD853F;">Booking (8)</h4>
+                        <ul class="text-sm space-y-1" style="color: var(--text-medium);">
                             <li>• tickets sum/mean/count/std</li>
                             <li>• lead_time mean/std/max</li>
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-semibold text-red-300 mb-2">Statistical (12+)</h4>
-                        <ul class="text-sm text-slate-300 space-y-1">
+                        <h4 class="font-semibold mb-2" style="color: #FF8B7B;">Statistical (12+)</h4>
+                        <ul class="text-sm space-y-1" style="color: var(--text-medium);">
                             <li>• type_mean, type_std</li>
                             <li>• area_mean, area_std</li>
                             <li>• theater_id aggregates</li>
@@ -495,7 +496,7 @@
                     </div>
                 </div>
                 <div class="mt-6 text-center">
-                    <p class="text-slate-400 text-sm">
+                    <p class="text-sm" style="color: var(--text-medium);">
                         <strong>Total: 80+ engineered features</strong> capturing temporal dynamics, booking behavior,
                         theater characteristics, and interaction effects.
                     </p>
@@ -507,58 +508,58 @@
     <!-- Methodology -->
     <section id="method" class="px-6 py-20">
         <div class="max-w-6xl mx-auto reveal">
-            <h2 class="text-3xl font-semibold mb-8 text-center">Methodology</h2>
+            <h2 class="text-3xl font-semibold mb-8 text-center" style="color: var(--text-dark);">Methodology</h2>
             <div class="grid lg:grid-cols-2 gap-8">
                 <div class="glass rounded-2xl p-8 hover-card tooltip-container">
-                    <h3 class="text-xl font-semibold mb-4">5-Step ML Pipeline</h3>
+                    <h3 class="text-xl font-semibold mb-4" style="color: var(--text-dark);">5-Step ML Pipeline</h3>
                     <div class="space-y-4">
                         <div class="flex items-start">
                             <div
-                                class="glass rounded-full w-10 h-10 flex items-center justify-center mr-4 shrink-0 text-teal-300 font-bold">
+                                class="glass rounded-full w-10 h-10 flex items-center justify-center mr-4 shrink-0 font-bold" style="color: #D2691E;">
                                 1</div>
                             <div>
-                                <h4 class="font-semibold">Data Cleaning</h4>
-                                <p class="text-slate-400 text-sm">Unified time zones, parsed datetimes, handled nulls.
+                                <h4 class="font-semibold" style="color: var(--text-dark);">Data Cleaning</h4>
+                                <p class="text-sm" style="color: var(--text-medium);">Unified time zones, parsed datetimes, handled nulls.
                                     Merged 7 datasets on theater IDs and show dates.</p>
                             </div>
                         </div>
                         <div class="flex items-start">
                             <div
-                                class="glass rounded-full w-10 h-10 flex items-center justify-center mr-4 shrink-0 text-purple-300 font-bold">
+                                class="glass rounded-full w-10 h-10 flex items-center justify-center mr-4 shrink-0 font-bold" style="color: #FF8B7B;">
                                 2</div>
                             <div>
-                                <h4 class="font-semibold">Feature Engineering</h4>
-                                <p class="text-slate-400 text-sm">Created 80+ features: temporal, cyclical, lag,
+                                <h4 class="font-semibold" style="color: var(--text-dark);">Feature Engineering</h4>
+                                <p class="text-sm" style="color: var(--text-medium);">Created 80+ features: temporal, cyclical, lag,
                                     rolling, EWM, booking aggregates, and interaction terms.</p>
                             </div>
                         </div>
                         <div class="flex items-start">
                             <div
-                                class="glass rounded-full w-10 h-10 flex items-center justify-center mr-4 shrink-0 text-orange-300 font-bold">
+                                class="glass rounded-full w-10 h-10 flex items-center justify-center mr-4 shrink-0 font-bold" style="color: #D2691E;">
                                 3</div>
                             <div>
-                                <h4 class="font-semibold">Preprocessing</h4>
-                                <p class="text-slate-400 text-sm">Label encoding for categorical features. KNN Imputer
+                                <h4 class="font-semibold" style="color: var(--text-dark);">Preprocessing</h4>
+                                <p class="text-sm" style="color: var(--text-medium);">Label encoding for categorical features. KNN Imputer
                                     (k=5, distance-weighted). StandardScaler normalization.</p>
                             </div>
                         </div>
                         <div class="flex items-start">
                             <div
-                                class="glass rounded-full w-10 h-10 flex items-center justify-center mr-4 shrink-0 text-blue-300 font-bold">
+                                class="glass rounded-full w-10 h-10 flex items-center justify-center mr-4 shrink-0 font-bold" style="color: #CD853F;">
                                 4</div>
                             <div>
-                                <h4 class="font-semibold">Time-Series CV</h4>
-                                <p class="text-slate-400 text-sm">TimeSeriesSplit (5 folds) to prevent leakage and
+                                <h4 class="font-semibold" style="color: var(--text-dark);">Time-Series CV</h4>
+                                <p class="text-sm" style="color: var(--text-medium);">TimeSeriesSplit (5 folds) to prevent leakage and
                                     maintain chronological integrity during validation.</p>
                             </div>
                         </div>
                         <div class="flex items-start">
                             <div
-                                class="glass rounded-full w-10 h-10 flex items-center justify-center mr-4 shrink-0 text-pink-300 font-bold">
+                                class="glass rounded-full w-10 h-10 flex items-center justify-center mr-4 shrink-0 font-bold" style="color: #FF8B7B;">
                                 5</div>
                             <div>
-                                <h4 class="font-semibold">Ensemble Modeling</h4>
-                                <p class="text-slate-400 text-sm">Trained Ridge, LightGBM, XGBoost. Combined via
+                                <h4 class="font-semibold" style="color: var(--text-dark);">Ensemble Modeling</h4>
+                                <p class="text-sm" style="color: var(--text-medium);">Trained Ridge, LightGBM, XGBoost. Combined via
                                     weighted averaging: 10% Ridge + 40% LightGBM + 50% XGBoost.</p>
                             </div>
                         </div>
@@ -566,40 +567,40 @@
                     <div class="tooltip">End-to-end ML workflow from raw data to predictions</div>
                 </div>
                 <div class="glass rounded-2xl p-8 hover-card tooltip-container">
-                    <h3 class="text-xl font-semibold mb-4">Architecture Flow</h3>
+                    <h3 class="text-xl font-semibold mb-4" style="color: var(--text-dark);">Architecture Flow</h3>
                     <div class="space-y-3">
-                        <div class="glass rounded-xl p-4 text-center">
+                        <div class="glass rounded-xl p-4 text-center" style="color: var(--text-dark);">
                             <strong>Raw Data (7 Datasets)</strong>
                         </div>
-                        <div class="text-center text-slate-400">↓</div>
+                        <div class="text-center" style="color: var(--text-light);">↓</div>
                         <div class="glass rounded-xl p-4 text-center bg-teal-900/20">
                             <strong>Data Cleaning & Merging</strong>
                         </div>
-                        <div class="text-center text-slate-400">↓</div>
-                        <div class="glass rounded-xl p-4 text-center bg-purple-900/20">
+                        <div class="text-center" style="color: var(--text-light);">↓</div>
+                        <div class="glass rounded-xl p-4 text-center" style="background: rgba(210, 105, 30, 0.1); color: var(--text-dark);">
                             <strong>Feature Engineering (80+ Features)</strong>
-                            <p class="text-xs text-slate-400 mt-1">Temporal | Lag | Rolling | EWM | Statistical</p>
+                            <p class="text-xs mt-1" style="color: var(--text-medium);">Temporal | Lag | Rolling | EWM | Statistical</p>
                         </div>
-                        <div class="text-center text-slate-400">↓</div>
+                        <div class="text-center" style="color: var(--text-light);">↓</div>
                         <div class="glass rounded-xl p-4 text-center bg-orange-900/20">
                             <strong>Encoding + KNN Imputation + Scaling</strong>
                         </div>
-                        <div class="text-center text-slate-400">↓</div>
-                        <div class="glass rounded-xl p-4 text-center bg-blue-900/20">
+                        <div class="text-center" style="color: var(--text-light);">↓</div>
+                        <div class="glass rounded-xl p-4 text-center" style="background: rgba(255, 139, 123, 0.1); color: var(--text-dark);">
                             <strong>TimeSeriesSplit (5-Fold CV)</strong>
                         </div>
-                        <div class="text-center text-slate-400">↓</div>
+                        <div class="text-center" style="color: var(--text-light);">↓</div>
                         <div class="grid grid-cols-3 gap-2">
                             <div class="glass rounded-xl p-3 text-center text-sm">Ridge</div>
                             <div class="glass rounded-xl p-3 text-center text-sm">LightGBM</div>
                             <div class="glass rounded-xl p-3 text-center text-sm">XGBoost</div>
                         </div>
-                        <div class="text-center text-slate-400">↓</div>
-                        <div class="glass rounded-xl p-4 text-center bg-pink-900/20">
+                        <div class="text-center" style="color: var(--text-light);">↓</div>
+                        <div class="glass rounded-xl p-4 text-center" style="background: rgba(210, 105, 30, 0.1); color: var(--text-dark);">
                             <strong>Weighted Ensemble</strong>
-                            <p class="text-xs text-slate-400 mt-1">10% + 40% + 50%</p>
+                            <p class="text-xs mt-1" style="color: var(--text-medium);">10% + 40% + 50%</p>
                         </div>
-                        <div class="text-center text-slate-400">↓</div>
+                        <div class="text-center" style="color: var(--text-light);">↓</div>
                         <div class="glass rounded-xl p-4 text-center bg-green-900/20">
                             <strong>Final Predictions</strong>
                         </div>
@@ -613,14 +614,15 @@
     <!-- Models -->
     <section id="models" class="px-6 py-20">
         <div class="max-w-6xl mx-auto reveal">
-            <h2 class="text-3xl font-semibold mb-8 text-center">Model Architecture & Validation</h2>
+            <h2 class="text-3xl font-semibold mb-8 text-center" style="color: var(--text-dark);">Model Architecture & Validation
+            </h2>
             <div class="grid lg:grid-cols-3 gap-6 mb-8">
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
-                    <h3 class="text-lg font-semibold mb-3 text-teal-300">Ridge Regression</h3>
-                    <p class="text-slate-300 text-sm mb-4">
+                    <h3 class="text-lg font-semibold mb-3" style="color: #D2691E;">Ridge Regression</h3>
+                    <p class="text-sm mb-4" style="color: var(--text-medium);">
                         Linear baseline to gauge signal strength. Fast training, serves as ensemble diversity component.
                     </p>
-                    <div class="text-xs text-slate-400 space-y-1">
+                    <div class="text-xs space-y-1" style="color: var(--text-light);">
                         <p><strong>Hyperparameters:</strong></p>
                         <p>• alpha: 0.1</p>
                         <p>• max_iter: 5000</p>
@@ -628,11 +630,11 @@
                     <div class="tooltip">Linear baseline with R² ≈ 0.85</div>
                 </div>
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
-                    <h3 class="text-lg font-semibold mb-3 text-purple-300">LightGBM</h3>
-                    <p class="text-slate-300 text-sm mb-4">
+                    <h3 class="text-lg font-semibold mb-3" style="color: #FF8B7B;">LightGBM</h3>
+                    <p class="text-sm mb-4" style="color: var(--text-medium);">
                         Gradient boosted trees optimized for speed and accuracy. Captures non-linear temporal patterns.
                     </p>
-                    <div class="text-xs text-slate-400 space-y-1">
+                    <div class="text-xs space-y-1" style="color: var(--text-light);">
                         <p><strong>Key Parameters:</strong></p>
                         <p>• n_estimators: 500, lr: 0.03</p>
                         <p>• num_leaves: 63, max_depth: 8</p>
@@ -641,12 +643,12 @@
                     <div class="tooltip">Primary model with R² = 0.995</div>
                 </div>
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
-                    <h3 class="text-lg font-semibold mb-3 text-orange-300">XGBoost</h3>
-                    <p class="text-slate-300 text-sm mb-4">
+                    <h3 class="text-lg font-semibold mb-3" style="color: #D2691E;">XGBoost</h3>
+                    <p class="text-sm mb-4" style="color: var(--text-medium);">
                         Industry-standard boosting with robust regularization. Captures complex theater-time-booking
                         interactions.
                     </p>
-                    <div class="text-xs text-slate-400 space-y-1">
+                    <div class="text-xs space-y-1" style="color: var(--text-light);">
                         <p><strong>Key Parameters:</strong></p>
                         <p>• n_estimators: 500, lr: 0.03</p>
                         <p>• max_depth: 8, gamma: 0.1</p>
@@ -656,15 +658,16 @@
                 </div>
             </div>
             <div class="glass rounded-2xl p-8">
-                <h3 class="text-xl font-semibold mb-4 text-center">TimeSeriesSplit Cross-Validation</h3>
-                <p class="text-slate-300 text-center mb-6">
+                <h3 class="text-xl font-semibold mb-4 text-center" style="color: var(--text-dark);">TimeSeriesSplit Cross-Validation
+                </h3>
+                <p class="text-center mb-6" style="color: var(--text-medium);">
                     5-fold time-series cross-validation ensures chronological integrity and prevents data leakage. Each
                     fold trains on past data and validates on future data.
                 </p>
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
-                        <h4 class="font-semibold mb-3">Why TimeSeriesSplit?</h4>
-                        <ul class="text-sm text-slate-300 space-y-2">
+                        <h4 class="font-semibold mb-3" style="color: var(--text-dark);">Why TimeSeriesSplit?</h4>
+                        <ul class="text-sm space-y-2" style="color: var(--text-medium);">
                             <li>✓ Respects temporal order (no future information leakage)</li>
                             <li>✓ Simulates real production scenario</li>
                             <li>✓ Reveals model stability across time periods</li>
@@ -672,12 +675,12 @@
                         </ul>
                     </div>
                     <div>
-                        <h4 class="font-semibold mb-3">CV Results</h4>
-                        <p class="text-sm text-slate-300">
+                        <h4 class="font-semibold mb-3" style="color: var(--text-dark);">CV Results</h4>
+                        <p class="text-sm" style="color: var(--text-medium);">
                             Both LightGBM and XGBoost showed <strong>stable cross-validation scores with low
                                 variance</strong>, confirming the model generalizes well across different time periods.
                         </p>
-                        <p class="text-sm text-slate-300 mt-3">
+                        <p class="text-sm mt-3" style="color: var(--text-medium);">
                             Mean CV R² scores consistently above <strong>0.90</strong>, indicating robust forecasting
                             performance.
                         </p>
@@ -690,12 +693,12 @@
     <!-- Insights -->
     <section id="insights" class="px-6 py-20">
         <div class="max-w-6xl mx-auto reveal">
-            <h2 class="text-3xl font-semibold mb-8 text-center">Key Insights Discovered</h2>
+            <h2 class="text-3xl font-semibold mb-8 text-center" style="color: var(--text-dark);">Key Insights Discovered</h2>
             <div class="grid lg:grid-cols-2 gap-6">
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
                     <div class="text-3xl mb-3">📈</div>
-                    <h3 class="text-lg font-semibold mb-3">Weekend Spikes</h3>
-                    <p class="text-slate-300">
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">Weekend Spikes</h3>
+                    <p style="color: var(--text-medium);">
                         Audience demand consistently peaks on <strong>Saturdays and Sundays</strong>. Boxplots revealed
                         higher medians and larger variance for weekends compared to weekdays, indicating strong
                         day-of-week effects.
@@ -704,8 +707,8 @@
                 </div>
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
                     <div class="text-3xl mb-3">🏢</div>
-                    <h3 class="text-lg font-semibold mb-3">Theater Type Matters</h3>
-                    <p class="text-slate-300">
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">Theater Type Matters</h3>
+                    <p style="color: var(--text-medium);">
                         Certain theater categories show <strong>structurally higher average audiences</strong>.
                         Type-level aggregations (type_mean, type_std) emerged as top features, reflecting systematic
                         differences in theater appeal.
@@ -714,8 +717,8 @@
                 </div>
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
                     <div class="text-3xl mb-3">⏱️</div>
-                    <h3 class="text-lg font-semibold mb-3">Booking Lead-Time Patterns</h3>
-                    <p class="text-slate-300">
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">Booking Lead-Time Patterns</h3>
+                    <p style="color: var(--text-medium);">
                         The majority of bookings cluster in <strong>short lead windows (0-7 days)</strong>, while a long
                         tail reveals early planners. Lead-time features (mean, std, max) capture this heterogeneity.
                     </p>
@@ -723,8 +726,8 @@
                 </div>
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
                     <div class="text-3xl mb-3">📊</div>
-                    <h3 class="text-lg font-semibold mb-3">Momentum & Trend Effects</h3>
-                    <p class="text-slate-300">
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">Momentum & Trend Effects</h3>
+                    <p style="color: var(--text-medium);">
                         Lag and rolling features capture <strong>momentum shifts</strong>. Positive trend_7_14 indicates
                         audience growth over prior weeks, while high volatility signals unpredictable theaters.
                     </p>
@@ -732,8 +735,8 @@
                 </div>
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
                     <div class="text-3xl mb-3">🎯</div>
-                    <h3 class="text-lg font-semibold mb-3">Lag_1 is King</h3>
-                    <p class="text-slate-300">
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">Lag_1 is King</h3>
+                    <p style="color: var(--text-medium);">
                         <strong>Yesterday's audience (lag_1)</strong> emerged as the single most important feature in
                         both LightGBM and XGBoost, highlighting the power of recency in time-series forecasting.
                     </p>
@@ -741,8 +744,8 @@
                 </div>
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
                     <div class="text-3xl mb-3">🔄</div>
-                    <h3 class="text-lg font-semibold mb-3">Online/Offline Ratio</h3>
-                    <p class="text-slate-300">
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">Online/Offline Ratio</h3>
+                    <p style="color: var(--text-medium);">
                         The <strong>pos_ratio</strong> (offline/online tickets) varies significantly across theaters,
                         reflecting different customer behaviors and helping the model adjust for local preferences.
                     </p>
@@ -755,12 +758,12 @@
     <!-- Challenges -->
     <section id="challenges" class="px-6 py-20">
         <div class="max-w-6xl mx-auto reveal">
-            <h2 class="text-3xl font-semibold mb-8 text-center">Challenges Solved</h2>
+            <h2 class="text-3xl font-semibold mb-8 text-center" style="color: var(--text-dark);">Challenges Solved</h2>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
                     <div class="text-2xl mb-3">🛡️</div>
-                    <h3 class="text-lg font-semibold mb-3">Data Leakage Prevention</h3>
-                    <p class="text-slate-300">
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">Data Leakage Prevention</h3>
+                    <p style="color: var(--text-medium);">
                         Implemented <strong>TimeSeriesSplit</strong> validation and shifted all rolling windows to
                         ensure only past data informed each prediction. No future information leaked into training.
                     </p>
@@ -768,8 +771,8 @@
                 </div>
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
                     <div class="text-2xl mb-3">📉</div>
-                    <h3 class="text-lg font-semibold mb-3">Non-Stationarity</h3>
-                    <p class="text-slate-300">
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">Non-Stationarity</h3>
+                    <p style="color: var(--text-medium);">
                         Audience patterns evolve across seasons. <strong>Rolling statistics, EWM, and trend
                             features</strong> dynamically adjusted for changing demand patterns over time.
                     </p>
@@ -777,8 +780,8 @@
                 </div>
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
                     <div class="text-2xl mb-3">🔢</div>
-                    <h3 class="text-lg font-semibold mb-3">High Cardinality</h3>
-                    <p class="text-slate-300">
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">High Cardinality</h3>
+                    <p style="color: var(--text-medium);">
                         Thousands of unique theater IDs created sparsity. <strong>Label encoding + theater-level
                             aggregates</strong> reduced dimensionality while preserving entity identity.
                     </p>
@@ -786,8 +789,8 @@
                 </div>
                 <div class="glass rounded-2xl p-6 hover-card tooltip-container">
                     <div class="text-2xl mb-3">⚖️</div>
-                    <h3 class="text-lg font-semibold mb-3">Overfitting Mitigation</h3>
-                    <p class="text-slate-300">
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">Overfitting Mitigation</h3>
+                    <p style="color: var(--text-medium);">
                         L1/L2 regularization (reg_alpha, reg_lambda) plus <strong>ensemble blending</strong> balanced
                         bias-variance tradeoffs, improving generalization to unseen theaters.
                     </p>
@@ -800,47 +803,47 @@
     <!-- Results -->
     <section id="results" class="px-6 py-20">
         <div class="max-w-6xl mx-auto reveal">
-            <h2 class="text-3xl font-semibold mb-8 text-center">Results & Performance</h2>
+            <h2 class="text-3xl font-semibold mb-8 text-center" style="color: var(--text-dark);">Results & Performance</h2>
             <div class="glass rounded-2xl p-8 mb-8 text-center">
-                <p class="text-slate-300 mb-4">
+                <p class="mb-4" style="color: var(--text-medium);">
                     The ensemble model achieved <strong class="text-teal-300">R² > 0.995</strong> on training data,
                     demonstrating exceptional fit. All models trained with optimized hyperparameters and validated using
                     5-fold TimeSeriesSplit.
                 </p>
-                <p class="text-slate-400 text-sm">
+                <p class="text-sm" style="color: var(--text-light);">
                     <em>Charts below reflect patterns from the notebook's EDA and model outputs.</em>
                 </p>
             </div>
 
             <div class="grid lg:grid-cols-2 gap-6">
                 <div class="glass rounded-2xl p-6 hover-card chart-container tooltip-container">
-                    <h3 class="text-lg font-semibold mb-4">Model Comparison (R² Score)</h3>
+                    <h3 class="text-lg font-semibold mb-4" style="color: var(--text-dark);">Model Comparison (R² Score)</h3>
                     <canvas id="modelChart" height="250"></canvas>
-                    <p class="text-xs text-slate-400 mt-3 text-center">
+                    <p class="text-xs mt-3 text-center" style="color: var(--text-light);">
                         Ensemble outperforms individual models by combining their strengths.
                     </p>
                     <div class="tooltip">Ensemble = 10% Ridge + 40% LightGBM + 50% XGBoost</div>
                 </div>
                 <div class="glass rounded-2xl p-6 hover-card chart-container tooltip-container">
-                    <h3 class="text-lg font-semibold mb-4">Top 10 Features (LightGBM)</h3>
+                    <h3 class="text-lg font-semibold mb-4" style="color: var(--text-dark);">Top 10 Features (LightGBM)</h3>
                     <canvas id="featureChart" height="250"></canvas>
-                    <p class="text-xs text-slate-400 mt-3 text-center">
+                    <p class="text-xs mt-3 text-center" style="color: var(--text-light);">
                         lag_1 and rolling features dominate importance rankings.
                     </p>
                     <div class="tooltip">Feature importance from LightGBM model training</div>
                 </div>
                 <div class="glass rounded-2xl p-6 hover-card chart-container tooltip-container">
-                    <h3 class="text-lg font-semibold mb-4">Booking Lead-Time Distribution</h3>
+                    <h3 class="text-lg font-semibold mb-4" style="color: var(--text-dark);">Booking Lead-Time Distribution</h3>
                     <canvas id="leadChart" height="250"></canvas>
-                    <p class="text-xs text-slate-400 mt-3 text-center">
+                    <p class="text-xs mt-3 text-center" style="color: var(--text-light);">
                         Most bookings made within 0-7 days before show time.
                     </p>
                     <div class="tooltip">Days between booking and show date</div>
                 </div>
                 <div class="glass rounded-2xl p-6 hover-card chart-container tooltip-container">
-                    <h3 class="text-lg font-semibold mb-4">Weekend vs Weekday Demand</h3>
+                    <h3 class="text-lg font-semibold mb-4" style="color: var(--text-dark);">Weekend vs Weekday Demand</h3>
                     <canvas id="weekendChart" height="250"></canvas>
-                    <p class="text-xs text-slate-400 mt-3 text-center">
+                    <p class="text-xs mt-3 text-center" style="color: var(--text-light);">
                         Clear weekend surge validates day-of-week feature importance.
                     </p>
                     <div class="tooltip">Average audience count by day type</div>
@@ -852,12 +855,12 @@
     <!-- Business Impact -->
     <section id="impact" class="px-6 py-20">
         <div class="max-w-6xl mx-auto reveal">
-            <h2 class="text-3xl font-semibold mb-8 text-center">Business Impact</h2>
+            <h2 class="text-3xl font-semibold mb-8 text-center" style="color: var(--text-dark);">Business Impact</h2>
             <div class="grid lg:grid-cols-3 gap-6">
                 <div class="glass rounded-2xl p-6 text-center hover-card tooltip-container">
                     <div class="text-4xl mb-4">💰</div>
-                    <h3 class="text-lg font-semibold mb-3">Revenue Optimization</h3>
-                    <p class="text-slate-300 text-sm">
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">Revenue Optimization</h3>
+                    <p class="text-sm" style="color: var(--text-medium);">
                         Accurate forecasts enable <strong>dynamic pricing</strong> and optimal promotion timing,
                         improving sell-through rates and maximizing revenue per show.
                     </p>
@@ -865,8 +868,8 @@
                 </div>
                 <div class="glass rounded-2xl p-6 text-center hover-card tooltip-container">
                     <div class="text-4xl mb-4">👥</div>
-                    <h3 class="text-lg font-semibold mb-3">Staffing Efficiency</h3>
-                    <p class="text-slate-300 text-sm">
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">Staffing Efficiency</h3>
+                    <p class="text-sm" style="color: var(--text-medium);">
                         Demand predictions allow <strong>optimized staff scheduling</strong>, reducing idle labor costs
                         during low-traffic periods and ensuring adequate coverage during peaks.
                     </p>
@@ -874,8 +877,8 @@
                 </div>
                 <div class="glass rounded-2xl p-6 text-center hover-card tooltip-container">
                     <div class="text-4xl mb-4">🎬</div>
-                    <h3 class="text-lg font-semibold mb-3">Screen Allocation</h3>
-                    <p class="text-slate-300 text-sm">
+                    <h3 class="text-lg font-semibold mb-3" style="color: var(--text-dark);">Screen Allocation</h3>
+                    <p class="text-sm" style="color: var(--text-medium);">
                         High-demand theaters receive <strong>premium time slots</strong>, maximizing screen utilization
                         and ROI while minimizing empty-seat waste.
                     </p>
@@ -888,11 +891,11 @@
     <!-- Conclusion -->
     <section id="conclusion" class="px-6 py-20">
         <div class="max-w-6xl mx-auto reveal">
-            <h2 class="text-3xl font-semibold mb-8 text-center">Conclusion & Future Work</h2>
+            <h2 class="text-3xl font-semibold mb-8 text-center" style="color: var(--text-dark);">Conclusion & Future Work</h2>
             <div class="grid md:grid-cols-2 gap-8">
                 <div class="glass rounded-2xl p-8 hover-card tooltip-container">
-                    <h3 class="text-xl font-semibold mb-4 text-teal-300">Key Takeaways</h3>
-                    <ul class="space-y-3 text-slate-300">
+                    <h3 class="text-xl font-semibold mb-4" style="color: #D2691E;">Key Takeaways</h3>
+                    <ul class="space-y-3" style="color: var(--text-medium);">
                         <li class="flex items-start">
                             <span class="text-teal-400 mr-2">✓</span>
                             <span><strong>Ensemble approach</strong> (Ridge + LightGBM + XGBoost) delivers robust,
@@ -916,8 +919,8 @@
                     </ul>
                 </div>
                 <div class="glass rounded-2xl p-8">
-                    <h3 class="text-xl font-semibold mb-4 text-purple-300">Future Enhancements</h3>
-                    <ul class="space-y-3 text-slate-300">
+                    <h3 class="text-xl font-semibold mb-4" style="color: #FF8B7B;">Future Enhancements</h3>
+                    <ul class="space-y-3" style="color: var(--text-medium);">
                         <li class="flex items-start">
                             <span class="text-purple-400 mr-2">→</span>
                             <span><strong>Sequence models</strong> (LSTM, Temporal Fusion Transformers) to capture
@@ -948,82 +951,82 @@
     <!-- About -->
     <section id="about" class="px-6 py-20 pb-28">
         <div class="max-w-6xl mx-auto reveal">
-            <h2 class="text-3xl font-semibold mb-8 text-center">About the Project Creator</h2>
+            <h2 class="text-3xl font-semibold mb-8 text-center" style="color: var(--text-dark);">About the Project Creator</h2>
             <div class="glass rounded-2xl p-8 hover-card">
                 <div class="grid md:grid-cols-[2fr_1fr] gap-8">
                     <div>
-                        <h3 class="text-2xl font-bold mb-2 text-teal-300">Ayan Hussain</h3>
-                        <p class="text-slate-400 text-sm mb-4">Data Science Student | Machine Learning Enthusiast</p>
+                        <h3 class="text-2xl font-bold mb-2" style="color: #D2691E;">Ayan Hussain</h3>
+                        <p class="text-sm mb-4" style="color: var(--text-medium);">Data Science Student | Machine Learning Enthusiast</p>
                         
-                        <p class="text-slate-300 leading-relaxed mb-4">
+                        <p class="leading-relaxed mb-4" style="color: var(--text-medium);">
                             I'm a Data Science student at <strong>Indian Institute of Technology (IIT) Madras</strong>, pursuing a BS in Data
                             Science and Applications.
                             Passionate about machine learning, time-series forecasting, and building production-grade ML pipelines that solve
                             real-world problems.
                         </p>
-                        <p class="text-slate-300 leading-relaxed mb-4">
+                        <p class="leading-relaxed mb-4" style="color: var(--text-medium);">
                             This Cinema Audience Forecasting project showcases my expertise in <strong>Python, scikit-learn, LightGBM, XGBoost,
                                 pandas, matplotlib, seaborn</strong>, and end-to-end feature engineering. From data wrangling to ensemble
                             modeling,
                             I've demonstrated the ability to tackle complex forecasting challenges with advanced ML techniques.
                         </p>
 <div class="glass rounded-xl p-4 mt-6">
-    <h4 class="font-semibold mb-3 text-purple-300">Technical Skills</h4>
+    <h4 class="font-semibold mb-3" style="color: var(--text-dark);">Technical Skills</h4>
     <div class="flex flex-wrap gap-2">
-        <span class="glass rounded-full px-3 py-1 text-xs">Python</span>
-        <span class="glass rounded-full px-3 py-1 text-xs">Machine Learning</span>
-        <span class="glass rounded-full px-3 py-1 text-xs">Deep Learning</span>
-        <span class="glass rounded-full px-3 py-1 text-xs">Time Series</span>
-        <span class="glass rounded-full px-3 py-1 text-xs">LightGBM</span>
-        <span class="glass rounded-full px-3 py-1 text-xs">XGBoost</span>
-        <span class="glass rounded-full px-3 py-1 text-xs">scikit-learn</span>
-        <span class="glass rounded-full px-3 py-1 text-xs">Pandas</span>
-        <span class="glass rounded-full px-3 py-1 text-xs">NumPy</span>
-        <span class="glass rounded-full px-3 py-1 text-xs">Data Visualization</span>
+        <span class="glass rounded-full px-3 py-1 text-xs" style="color: var(--text-medium);">Python</span>
+        <span class="glass rounded-full px-3 py-1 text-xs" style="color: var(--text-medium);">Machine Learning</span>
+        <span class="glass rounded-full px-3 py-1 text-xs" style="color: var(--text-medium);">Deep Learning</span>
+        <span class="glass rounded-full px-3 py-1 text-xs" style="color: var(--text-medium);">Time Series</span>
+        <span class="glass rounded-full px-3 py-1 text-xs" style="color: var(--text-medium);">LightGBM</span>
+        <span class="glass rounded-full px-3 py-1 text-xs" style="color: var(--text-medium);">XGBoost</span>
+        <span class="glass rounded-full px-3 py-1 text-xs" style="color: var(--text-medium);">scikit-learn</span>
+        <span class="glass rounded-full px-3 py-1 text-xs" style="color: var(--text-medium);">Pandas</span>
+        <span class="glass rounded-full px-3 py-1 text-xs" style="color: var(--text-medium);">NumPy</span>
+        <span class="glass rounded-full px-3 py-1 text-xs" style="color: var(--text-medium);">Data Visualization</span>
     </div>
 </div>
 </div>
 
 <div>
     <div class="glass rounded-xl p-6 mb-6">
-        <h4 class="font-semibold mb-4 text-orange-300">📧 Contact Information</h4>
+        <h4 class="font-semibold mb-4" style="color: var(--text-dark);">📧 Contact Information</h4>
         <div class="space-y-3 text-sm">
             <div class="flex items-start">
-                <span class="text-teal-400 mr-2">✉️</span>
+                <span class="mr-2" style="color: #D2691E;">✉️</span>
                 <div>
-                    <p class="text-slate-400 text-xs">Email</p>
+                    <p class="text-xs" style="color: var(--text-light);">Email</p>
                     <a href="mailto:ayanhussain4212@gmail.com"
-                        class="text-slate-200 hover:text-teal-300 transition break-all">ayanhussain4212@gmail.com</a>
+                        class="transition break-all" style="color: var(--text-dark);">ayanhussain4212@gmail.com</a>
                 </div>
             </div>
             <div class="flex items-start">
-                <span class="text-teal-400 mr-2">📱</span>
+                <span class="mr-2" style="color: #D2691E;">📱</span>
                 <div>
-                    <p class="text-slate-400 text-xs">Phone</p>
-                    <a href="tel:+917081012288" class="text-slate-200 hover:text-teal-300 transition">+91 7081012288</a>
+                    <p class="text-xs" style="color: var(--text-light);">Phone</p>
+                    <a href="tel:+917081012288" class="transition" style="color: var(--text-dark);">+91 7081012288</a>
                 </div>
             </div>
             <div class="flex items-start">
-                <span class="text-teal-400 mr-2">📍</span>
+                <span class="mr-2" style="color: #D2691E;">📍</span>
                 <div>
-                    <p class="text-slate-400 text-xs">Location</p>
-                    <p class="text-slate-200">Bangalore, India</p>
-                    <p class="text-slate-400 text-xs">Near IISc Campus</p>
+                    <p class="text-xs" style="color: var(--text-light);">Location</p>
+                    <p style="color: var(--text-dark);">Bangalore, India</p>
+                    <p class="text-xs" style="color: var(--text-light);">Near IISc Campus</p>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="glass rounded-xl p-6">
-        <h4 class="font-semibold mb-4 text-blue-300">🔗 Connect With Me</h4>
+        <h4 class="font-semibold mb-4" style="color: var(--text-dark);">🔗 Connect With Me</h4>
         <div class="space-y-3">
             <a href="https://github.com/23f1000932" target="_blank"
-                class="glass rounded-lg px-4 py-2 text-sm font-semibold hover:bg-white/10 transition flex items-center justify-center gap-2">
+                class="glass rounded-lg px-4 py-2 text-sm font-semibold hover:bg-white/10 transition flex items-center justify-center gap-2" style="color: var(--text-dark);">
                 <span>GitHub</span>
                 <span class="text-xs">↗</span>
             </a>
             <a href="https://www.linkedin.com/in/ayan-hussain-58752626b/" target="_blank"
-                class="glass rounded-lg px-4 py-2 text-sm font-semibold hover:bg-white/10 transition flex items-center justify-center gap-2">
+                class="glass rounded-lg px-4 py-2 text-sm font-semibold hover:bg-white/10 transition flex items-center justify-center gap-2" style="color: var(--text-dark);">
                 <span>LinkedIn</span>
                 <span class="text-xs">↗</span>
             </a>
@@ -1031,11 +1034,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-8 pt-6 border-t border-slate-700/50 text-center">
-                    <p class="text-slate-400 text-sm">
+                <div class="mt-8 pt-6 text-center" style="border-top: 1px solid rgba(210, 105, 30, 0.2);">
+                    <p class="text-sm" style="color: var(--text-medium);">
                         💼 Open to opportunities in Data Science, Machine Learning, and AI roles
                     </p>
-                    <p class="text-slate-500 text-xs mt-2">
+                    <p class="text-xs mt-2" style="color: var(--text-light);">
                         Feel free to reach out for collaborations, projects, or just to connect!
                     </p>
                     </div>
@@ -1059,7 +1062,7 @@
         revealElements.forEach((el) => observer.observe(el));
 
         // Chart.js defaults
-            Chart.defaults.color = "#5C4033";
+                    Chart.defaults.color = "#3d2817";
         Chart.defaults.font.family = "Inter";
 
         // Model Comparison Chart (using actual notebook context: high R² for tree models, ensemble best)
